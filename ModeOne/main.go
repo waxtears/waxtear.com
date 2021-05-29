@@ -1,25 +1,36 @@
 package main
 
 import (
-	"ModeOne/handler"
-	pb "ModeOne/proto"
+	"fmt"
 
-	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/logger"
+	"github.com/asim/go-micro/v3"
+	"github.com/asim/go-micro/v3/logger"
+	"github.com/waxtears/waxtear.com/ModeOne/handler"
+	"github.com/waxtears/waxtear.com/ModeOne/proto/ModelOneProto"
 )
 
 func main() {
 	// Create service
-	srv := service.New(
-		service.Name("modeone"),
-		service.Version("latest"),
+	svr := micro.NewService(
+		micro.Name("modeone"),
+		micro.Version("latest"),
 	)
 
+	svr.Init()
+
 	// Register handler
-	pb.RegisterModeOneHandler(srv.Server(), new(handler.ModeOne))
+	//pb.RegisterModeOneHandler(srv.Server(), new(handler.ModeOne))
+	err := ModelOneProto.RegisterModelOneProtoHandler(svr.Server(), new(handler.ModeOne))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
 	// Run service
-	if err := srv.Run(); err != nil {
+	if err := svr.Run(); err != nil {
 		logger.Fatal(err)
+		return
 	}
+
+	return
 }

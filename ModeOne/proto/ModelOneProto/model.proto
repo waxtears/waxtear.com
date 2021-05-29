@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package ModelOneProto;
+
+option go_package = "./proto/ModelOneProto;ModelOneProto";
+
+service ModelOneProto {
+    rpc FuncOne(FuncOneReq) returns (FuncOneRsp) {}
+}
+
+message FuncOneReq {
+    string name = 1;
+}
+
+message FuncOneRsp {
+    string result = 2;
+}
