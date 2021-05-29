@@ -19,7 +19,6 @@ func main() {
 	svr.Init()
 
 	// Register handler
-	//pb.RegisterModeOneHandler(srv.Server(), new(handler.ModeOne))
 	err := ModelOneProto.RegisterModelOneProtoHandler(svr.Server(), new(handler.ModeOne))
 	if err != nil {
 		fmt.Println(err)

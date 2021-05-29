@@ -13,11 +13,11 @@ api:
 
 .PHONY: proto
 proto:
-	protoc --proto_path=. --micro_out=. --go_out=:. proto/ModeOne.proto
+	protoc --proto_path=.:$(GOPATH) --go_out=. --micro_out=. proto/ModelOneProto/model.proto
 	
 .PHONY: build
 build:
-	go build -o ModeOne *.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ModeOne *.go
 
 .PHONY: test
 test:
@@ -25,4 +25,4 @@ test:
 
 .PHONY: docker
 docker:
-	docker build . -t ModeOne:latest
+	docker build . -t modeone:latest
